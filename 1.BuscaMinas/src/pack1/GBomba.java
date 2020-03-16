@@ -7,7 +7,8 @@ public class GBomba extends Gelaxka{
 	}
 	
 	public void desestali() {
-	
+		
+		
 		
 	}
 

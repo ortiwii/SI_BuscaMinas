@@ -23,6 +23,4 @@ public class FactoryGelaxka {
 			return (null);
 		}
 	}
-	
-
 }

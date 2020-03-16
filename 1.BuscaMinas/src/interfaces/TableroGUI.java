@@ -1,4 +1,4 @@
-package pack1;
+package interfaces;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -6,8 +6,10 @@ import java.awt.EventQueue;
 import java.awt.Graphics;
 
 import javax.imageio.ImageIO;
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -21,11 +23,15 @@ import java.awt.Insets;
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.RowSpec;
+
+import pack1.FondoSwing;
+
 import javax.swing.JSplitPane;
 import java.awt.Panel;
 
 public class TableroGUI extends JFrame {
-	private JPanel panel;
+	
+	private JPanel panelGelaxkak;
 	private JPanel minaKopurua;
 	private JPanel aurpegia;
 	private JPanel denbora;
@@ -50,9 +56,39 @@ public class TableroGUI extends JFrame {
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 */
+	private JLabel gelaxkaSortu() {
+		JLabel label = new JLabel();
+		label.setBorder(BorderFactory.createLoweredBevelBorder());
+		label.setIcon("C:\\Users\\Gorka\\git\\SI_BuscaMinas\\1.BuscaMinas\\src\\irudiak\\tablero.gif");
+		label.setMaximumSize(new Dimension(20, 20));
+		label.setMinimumSize(new Dimension(18, 18));
+		label.setSize(new Dimension(18, 18));
+		//Listenerra gehitu
+		return label;
+	}
+    private JPanel getPanelGelaxkak() {
+		if (panelGelaxkak == null) {
+			panelGelaxkak = new JPanel();
+			panelGelaxkak.setLayout(new GridBagLayout());
+		}
+		return panelGelaxkak;
+	 }
+    private void hasieratu (int nLerro, int nZutabe) {
+    	for (y = 0; y < nLerro; y++) {
+    		for (x = 0; x < nZutabe; x++) {
+    			JLabel gelaxkaBerri = gelaxkaSortu();
+    			getListaCasillas().add(gelaxkaBerri);
+    			getPanelCasillas().add(
+    				gelaxkaBerri,
+    				new GridBagConstraints(x, y, 1, 1, 0.0, 0.0,
+    							     GridBagConstraints.CENTER,
+    							     GridBagConstraints.NONE, 
+                                                   new Insets(0, 0, 0, 0), 0, 0));
+    		}
+    	  }
+
+    }
+
 	public TableroGUI() {
 		initialize();
 	}

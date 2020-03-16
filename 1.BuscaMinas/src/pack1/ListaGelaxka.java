@@ -5,16 +5,23 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class ListaGelaxka {
 	
+	private static ListaGelaxka nLista = null;
 	ArrayList<Gelaxka[]> lista;
 	int zutabea;
 	int errenkada;
 	int bombaKop;
 	
-	public ListaGelaxka(int pErrenkada, int pZutabea) {
+	private ListaGelaxka(int pErrenkada, int pZutabea) {
 		this.errenkada = pErrenkada;
 		this.zutabea = pZutabea;	
 		this.bombaKop = pZutabea * 1; // 1 zailtasuna da
 		this.hasieratu(pErrenkada, pZutabea);
+	}
+	public static ListaGelaxka getLista () {
+		if (nLista == null) {
+			nLista = new ListaGelaxka(10, 7);
+		}
+		return (nLista);
 	}
 	
 	private void bonbakJarri () {
