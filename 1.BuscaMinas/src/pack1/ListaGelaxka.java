@@ -71,7 +71,7 @@ public class ListaGelaxka {
 			while (z < this.zutabea) {
 				if (lista.get(e)[z] != null && !(lista.get(e)[z] instanceof GBomba)) {
 					int bKop = this.zenbatu(e, z);
-					if (z != 0) {
+					if (bKop != 0) {
 						this.lista.get(e)[z] = gelF.gelaxkaSortu(1, z, e, bKop);
 					}else {
 						this.lista.get(e)[z] = gelF.gelaxkaSortu(0, z, e, 0);
