@@ -9,7 +9,9 @@ public class GZenbakia extends Gelaxka {
 		this.zenb = pZenb;
 		
 	}
-	
+	public int getZenb () {
+		return (this.zenb);
+	}
 	public void desestali() {
 		//	TODO
 	}

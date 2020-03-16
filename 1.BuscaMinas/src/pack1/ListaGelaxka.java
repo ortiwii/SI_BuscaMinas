@@ -19,11 +19,13 @@ public class ListaGelaxka {
 	
 	private void bonbakJarri () {
 		int rZ, rE;
-		for (int i = 0; i < bombaKop; i ++) {
+		int i = 0;
+		while (i < bombaKop) {
 			rE = ThreadLocalRandom.current().nextInt(0, errenkada);
 			rZ = ThreadLocalRandom.current().nextInt(0, zutabea);
-			if (this.badagoBeteta(rZ, rE)) {
-				this.add(new GBomba(rE, rZ));	
+			if (!this.badagoBeteta(rZ, rE)) {
+				this.add(new GBomba(rE, rZ));
+				i ++;
 			}else {
 				i --;
 			}
@@ -38,23 +40,23 @@ public class ListaGelaxka {
 	private void hasieratu (int errenkada, int zutabea) {
 		
 		this.lista = new ArrayList<Gelaxka[]>();
-		int i = 0;
-		int j;
-		while (i < errenkada) {
-			this.lista.add(i, new Gelaxka[zutabea]);
-			j = 0;
-			while (j < zutabea) {
-				this.lista.get(i)[j] = new GHutsa (j,i);
-				j ++;
+		int e = 0;
+		int z;
+		while (e < errenkada) {
+			this.lista.add(e, new Gelaxka[zutabea]);
+			z = 0;
+			while (z < zutabea) {
+				this.lista.get(e)[z] = FactoryGelaxka.getFact().gelaxkaSortu(0, z,e, 0);
+				z ++;
 			}
-			i++;
+			e++;
 		}
 		this.bonbakJarri();
 		this.zenbakiakJarri();
 	}
 	private boolean badagoBeteta (int pZut, int pErr) {
 		Gelaxka[] aux = this.lista.get(pErr);
-		if (aux[pZut] != null) {
+		if (aux[pZut] != null && !(aux[pZut] instanceof GBomba)) {
 			return (false);
 		}else {
 			return (true);
@@ -63,15 +65,16 @@ public class ListaGelaxka {
 	private void zenbakiakJarri () {
 		int e = 0;
 		int z = 0;
+		FactoryGelaxka gelF = FactoryGelaxka.getFact();
 		while (e < this.errenkada) {
 			z = 0;
 			while (z < this.zutabea) {
 				if (lista.get(e)[z] != null && !(lista.get(e)[z] instanceof GBomba)) {
 					int bKop = this.zenbatu(e, z);
 					if (z != 0) {
-						this.lista.get(e)[z] = new GZenbakia(z, e, bKop);
+						this.lista.get(e)[z] = gelF.gelaxkaSortu(1, z, e, bKop);
 					}else {
-						this.lista.get(e)[z] = new GHutsa(z, e);
+						this.lista.get(e)[z] = gelF.gelaxkaSortu(0, z, e, 0);
 					}
 				}
 			
@@ -97,26 +100,46 @@ public class ListaGelaxka {
 			emaitza ++;
 		}
 		//e+1, z-1
-		if (z!=0 && this.lista.get(e+1)[z-1] instanceof GBomba) {
+		if (e != this.errenkada-1 && z!=0 && this.lista.get(e+1)[z-1] instanceof GBomba) {
 			emaitza ++;
 		}
 		//e+1, z
-		if (this.lista.get(e+1)[z] instanceof GBomba) {
+		if (e != this.errenkada-1 && this.lista.get(e+1)[z] instanceof GBomba) {
 			emaitza ++;
 		}
 		//e+1, z+1
-		if (this.lista.get(e+1)[z+1] instanceof GBomba) {
+		if (e != this.errenkada-1 && z != this.zutabea-1 && this.lista.get(e+1)[z+1] instanceof GBomba) {
 			emaitza ++;
 		}
 		//e, z+1
-		if (this.lista.get(e)[z+1] instanceof GBomba) {
+		if (z != this.zutabea-1 && this.lista.get(e)[z+1] instanceof GBomba) {
 			emaitza ++;
 		}
 		//e-1, z+1
-		if (e!=0 && this.lista.get(e-1)[z+1] instanceof GBomba) {
+		if (z != this.zutabea-1 && e!=0 && this.lista.get(e-1)[z+1] instanceof GBomba) {
 			emaitza ++;
 		}
 		return emaitza;
 		
+	}
+	//Soilik probatzeko
+	public void inprimatu () {
+		int z = 0, e = 0;
+		while (e < this.errenkada) {
+			z = 0;
+			while (z < this.zutabea) {
+				if (this.lista.get(e)[z] instanceof GBomba) {
+					System.out.print("[]");
+				}else if (this.lista.get(e)[z] instanceof GZenbakia) {
+					System.out.print(((GZenbakia)this.lista.get(e)[z]).getZenb()+ " ");
+				}else {
+					System.out.print("0 ");
+				}
+				System.out.print(" ");
+				z ++;
+			}
+			System.out.println("");
+			e ++;
+		}
 	}
 }
