@@ -76,8 +76,7 @@ public class ListaGelaxka {
 					}else {
 						this.lista.get(e)[z] = gelF.gelaxkaSortu(0, z, e, 0);
 					}
-				}
-			
+				}			
 				z ++;
 			}
 			e ++;
@@ -86,7 +85,6 @@ public class ListaGelaxka {
 	private int zenbatu (int e, int z) {
 		
 		int emaitza = 0;
-		
 		//e-1, z
 		if (e != 0 && this.lista.get(e-1)[z] instanceof GBomba) {
 			emaitza ++;
