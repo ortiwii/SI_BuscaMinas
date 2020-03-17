@@ -6,10 +6,9 @@ import java.awt.EventQueue;
 import java.awt.Graphics;
 
 import javax.imageio.ImageIO;
-import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -25,17 +24,19 @@ import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.RowSpec;
 
 import pack1.FondoSwing;
+import pack1.GelaxkaEgoera;
 
 import javax.swing.JSplitPane;
 import java.awt.Panel;
+import java.awt.event.MouseEvent;
 
 public class TableroGUI extends JFrame {
-	
-	private JPanel panelGelaxkak;
+	private JPanel panel;
 	private JPanel minaKopurua;
 	private JPanel aurpegia;
 	private JPanel denbora;
 	private JPanel gelaxkak;
+	private JButton gelaxka,kaxa;
 	private JPanel mina_batekoak;
 	private JPanel mina_hamarrekoak;
 	private JPanel denbora_batekoak;
@@ -56,54 +57,34 @@ public class TableroGUI extends JFrame {
 		});
 	}
 
-	private JLabel gelaxkaSortu() {
-		JLabel label = new JLabel();
-		label.setBorder(BorderFactory.createLoweredBevelBorder());
-		label.setIcon("C:\\Users\\Gorka\\git\\SI_BuscaMinas\\1.BuscaMinas\\src\\irudiak\\tablero.gif");
-		label.setMaximumSize(new Dimension(20, 20));
-		label.setMinimumSize(new Dimension(18, 18));
-		label.setSize(new Dimension(18, 18));
-		//Listenerra gehitu
-		return label;
-	}
-    private JPanel getPanelGelaxkak() {
-		if (panelGelaxkak == null) {
-			panelGelaxkak = new JPanel();
-			panelGelaxkak.setLayout(new GridBagLayout());
-		}
-		return panelGelaxkak;
-	 }
-    private void hasieratu (int nLerro, int nZutabe) {
-    	for (y = 0; y < nLerro; y++) {
-    		for (x = 0; x < nZutabe; x++) {
-    			JLabel gelaxkaBerri = gelaxkaSortu();
-    			getListaCasillas().add(gelaxkaBerri);
-    			getPanelCasillas().add(
-    				gelaxkaBerri,
-    				new GridBagConstraints(x, y, 1, 1, 0.0, 0.0,
-    							     GridBagConstraints.CENTER,
-    							     GridBagConstraints.NONE, 
-                                                   new Insets(0, 0, 0, 0), 0, 0));
-    		}
-    	  }
-
-    }
-
-	public TableroGUI() {
+	/**
+	 * Create the frame.
+	 * @throws IOException 
+	 */
+	public TableroGUI() throws IOException {
 		initialize();
 	}
-	private void initialize() {
+	private void initialize() throws IOException {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 400, 500);
 		getContentPane().setLayout(null);
 		getContentPane().add(getMinaKopurua());
 		getContentPane().add(getAurpegia());
 		getContentPane().add(getDenbora());
+		getTablero(10,10);
+		
+		
+		
 		try {
-            FondoSwing cara = new FondoSwing(ImageIO.read(new File("C:/Users/Gorka/git/SI_BuscaMinas/1.BuscaMinas/src/irudiak/cara1.gif")));
+            FondoSwing cara = new FondoSwing(ImageIO.read(new File("./src/irudiak/cara1.gif")));
             this.getAurpegia().setBorder(cara);
             
-            FondoSwing zero = new FondoSwing(ImageIO.read(new File("C:/Users/Gorka/git/SI_BuscaMinas/1.BuscaMinas/src/irudiak/n0.gif")));
+            //FondoSwing a=new FondoSwing(ImageIO.read(new File("./src/irudiak/tablero.gif")));
+            //this.getGelaxkak().setBorder(a);
+            //this.getGelaxkak().setBorder(a);
+            //this.getGelaxkak().setBorder(a);
+            
+            FondoSwing zero = new FondoSwing(ImageIO.read(new File("./src/irudiak/n0.gif")));
             this.getDenbora_batekoak().setBorder(zero);
             this.getDenbora_hamarrekoak().setBorder(zero);
             this.getMina_batekoak().setBorder(zero);
@@ -114,6 +95,25 @@ public class TableroGUI extends JFrame {
         }
 
 		getContentPane().add(getGelaxkak());
+	}
+	private void getTablero(int pE,int pZ) throws IOException {
+		if (gelaxkak==null) {
+			gelaxkak=getGelaxkak();
+			GridLayout g=new GridLayout(pE,pZ,0,0);
+			gelaxkak.setLayout(g);
+			JButton[][] b=new JButton[pE][pZ];
+			FondoSwing a=new FondoSwing(ImageIO.read(new File("./src/irudiak/tablero.gif")));
+			GelaxkaEgoera gE = new GelaxkaEgoera();
+			for (int i=0;i<pE;i++) {
+				for(int z=0;z<pZ;z++) {
+					kaxa = new JButton();
+					kaxa.addMouseListener(gE);
+					kaxa.setBorder(a);
+					b[i][z]=kaxa;
+					gelaxkak.add(kaxa);
+				}
+			}			
+		}
 	}
 	private JPanel getMinaKopurua() {
 		if (minaKopurua == null) {
@@ -142,12 +142,20 @@ public class TableroGUI extends JFrame {
 		}
 		return denbora;
 	}
-	private JPanel getGelaxkak() {
+	private JPanel getGelaxkak() throws IOException {
 		if (gelaxkak == null) {
 			gelaxkak = new JPanel();
-			gelaxkak.setBounds(12, 108, 358, 332);
+			gelaxkak.setBounds(12, 108, 358, 332);	
 		}
 		return gelaxkak;
+	}
+	private JButton getGelaxka() throws IOException {
+		if (gelaxka==null) {
+			gelaxka=new JButton();
+		}
+		
+		
+		return gelaxka;
 	}
 	private JPanel getMina_batekoak() {
 		if (mina_batekoak == null) {
@@ -182,3 +190,4 @@ public class TableroGUI extends JFrame {
 		return denbora_hamarrekoak;
 	}
 }
+
