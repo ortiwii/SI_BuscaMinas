@@ -1,4 +1,9 @@
 package pack1;
+
+import kontroladorea.GDesestalita;
+import kontroladorea.GEstalita;
+import kontroladorea.GelaxkaEgoera;
+
 public abstract class Gelaxka {
 	
 	private int zutabea;
@@ -8,11 +13,11 @@ public abstract class Gelaxka {
 	public Gelaxka (int pZutabea, int pErrenkada) {
 		this.zutabea = pZutabea;
 		this.errenkada = pErrenkada;
-		this.egoera = new GEstalita();
+		this.egoera = new GEstalita(errenkada, zutabea);
 	}
 	
 	public void egoeraAldatu () {
-		this.egoera = new GDesestalita();
+		this.egoera = new GDesestalita(errenkada, zutabea);
 	}
 	
 	public abstract  void desestali ();
@@ -23,5 +28,8 @@ public abstract class Gelaxka {
 	
 	public int getZutabea () {
 		return this.zutabea;
+	}
+	public GelaxkaEgoera getEgoera () {
+		return (this.egoera);
 	}
 }

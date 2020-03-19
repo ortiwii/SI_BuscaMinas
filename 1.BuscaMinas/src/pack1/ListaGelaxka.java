@@ -15,7 +15,7 @@ public class ListaGelaxka {
 		this.errenkada = pErrenkada;
 		this.zutabea = pZutabea;	
 		this.bombaKop = pZutabea * 1; // 1 zailtasuna da
-		this.hasieratu(pErrenkada, pZutabea);
+		this.hasieratu();
 	}
 	public static ListaGelaxka getLista () {
 		if (nLista == null) {
@@ -31,28 +31,28 @@ public class ListaGelaxka {
 			rE = ThreadLocalRandom.current().nextInt(0, errenkada);
 			rZ = ThreadLocalRandom.current().nextInt(0, zutabea);
 			if (!this.badagoBeteta(rZ, rE)) {
-				this.add(new GBomba(rE, rZ));
+				this.add(FactoryGelaxka.getFact().gelaxkaSortu(2, rZ, rE, 0));
 				i ++;
 			}else {
 				i --;
 			}
-		}
-		
+		}		
 	}
 
 	public void add (Gelaxka pGel) {
+		System.out.println(pGel.getErrenkada()+", "+pGel.getZutabea());
 		Gelaxka[] aux = this.lista.get(pGel.getErrenkada());
 		aux[pGel.getZutabea()] = pGel;
 	}
-	private void hasieratu (int errenkada, int zutabea) {
+	private void hasieratu () {
 		
 		this.lista = new ArrayList<Gelaxka[]>();
 		int e = 0;
 		int z;
-		while (e < errenkada) {
+		while (e < this.errenkada) {
 			this.lista.add(e, new Gelaxka[zutabea]);
 			z = 0;
-			while (z < zutabea) {
+			while (z < this.zutabea) {
 				this.lista.get(e)[z] = FactoryGelaxka.getFact().gelaxkaSortu(0, z,e, 0);
 				z ++;
 			}
@@ -146,5 +146,8 @@ public class ListaGelaxka {
 			System.out.println("");
 			e ++;
 		}
+	}
+	public Gelaxka getGelaxka (int pErr, int pZut) {
+		return (this.lista.get(pErr)[pZut]);
 	}
 }

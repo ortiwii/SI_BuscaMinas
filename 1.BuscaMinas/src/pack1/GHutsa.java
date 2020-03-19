@@ -1,4 +1,7 @@
 package pack1;
+
+import interfaces.TableroGUI;
+
 public class GHutsa extends Gelaxka{
 
 	
@@ -8,8 +11,7 @@ public class GHutsa extends Gelaxka{
 	}
 
 	public void desestali() {
-		// TODO Auto-generated method stub
-		
+		TableroGUI.getTablero().aldatu(getErrenkada(), getZutabea(), "./src/irudiak/c0.gif");
 	}
 
 }
